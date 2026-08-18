@@ -1,0 +1,19 @@
+# Node.js dependencies
+app/node_modules/
+npm-debug.log*
+
+# Environment files and credentials
+.env
+*.pem
+terraform/*.tfvars
+
+# Terraform temporary files and state
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Editor and operating-system files
+.vscode/
+.DS_Store
+Thumbs.db
