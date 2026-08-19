@@ -45,3 +45,24 @@ variable "node_max_size" {
   type        = number
   default     = 4
 }
+
+variable "jenkins_key_name" {
+  description = "AWS EC2 key pair used to access the Jenkins server"
+  type        = string
+}
+
+variable "jenkins_allowed_cidr" {
+  description = "Public IP address allowed to access Jenkins and SSH"
+  type        = string
+
+  validation {
+    condition     = can(cidrhost(var.jenkins_allowed_cidr, 0))
+    error_message = "jenkins_allowed_cidr must be a valid CIDR such as 203.0.113.10/32."
+  }
+}
+
+variable "jenkins_instance_type" {
+  description = "EC2 instance type used by Jenkins"
+  type        = string
+  default     = "t3.medium"
+}

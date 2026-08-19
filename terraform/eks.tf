@@ -7,6 +7,16 @@ module "eks" {
 
   endpoint_private_access = true
   endpoint_public_access  = true
+    security_group_additional_rules = {
+    jenkins_api_access = {
+      description              = "Allow Jenkins to access the EKS API"
+      protocol                 = "tcp"
+      from_port                = 443
+      to_port                  = 443
+      type                     = "ingress"
+      source_security_group_id = aws_security_group.jenkins.id
+    }
+  }
 
   enable_cluster_creator_admin_permissions = true
   enable_irsa                              = true
@@ -39,6 +49,23 @@ module "eks" {
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
+
+  access_entries = {
+    jenkins = {
+      principal_arn = aws_iam_role.jenkins.arn
+
+      policy_associations = {
+        namespace_admin = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
+
+          access_scope = {
+            type       = "namespace"
+            namespaces = ["tech-challenge-2"]
+          }
+        }
+      }
+    }
+  }
 
   eks_managed_node_groups = {
     application_nodes = {
