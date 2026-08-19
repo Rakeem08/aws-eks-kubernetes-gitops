@@ -552,6 +552,43 @@ helm uninstall aws-load-balancer-controller -n kube-system
 helm uninstall cluster-autoscaler -n kube-system
 helm uninstall metrics-server -n kube-system
 ```
+## GitOps Alternative: GitHub Actions and Argo CD
+
+The `gitops` branch contains an alternative CI/CD process using GitHub Actions and Argo CD.
+
+### How the GitOps Pipeline Works
+
+1. A developer pushes an application change to the `gitops` branch.
+2. GitHub Actions tests and builds the Docker image.
+3. GitHub Actions pushes the image to Amazon ECR using the Git commit SHA as the image tag.
+4. GitHub Actions updates the image tag in `helm/tech-challenge-2/values.yaml`.
+5. Argo CD detects the Helm change and automatically synchronizes it with EKS.
+6. Kubernetes deploys the new image and performs a rolling update.
+
+### GitOps Architecture
+
+```text
+Developer
+   |
+   v
+GitHub gitops branch
+   |
+   v
+GitHub Actions
+   |
+   +----> Amazon ECR
+   |
+   v
+Helm values updated
+   |
+   v
+Argo CD
+   |
+   v
+Amazon EKS
+   |
+   v
+Application Load Balancer
 
 Destroy the Terraform infrastructure:
 
