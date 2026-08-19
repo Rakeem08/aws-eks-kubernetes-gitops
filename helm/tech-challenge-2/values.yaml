@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: REPLACE_WITH_ECR_REPOSITORY_URL
-  tag: latest
+  repository: 067514125942.dkr.ecr.us-east-1.amazonaws.com/tech-challenge-2-app
+  tag: "f47fb90e457b22da3df7efef60495ea54c7a1ee5"
   pullPolicy: Always
 
 service:
