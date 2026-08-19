@@ -1,0 +1,165 @@
+name: GitOps CI
+
+on:
+  push:
+    branches:
+      - gitops
+    paths:
+      - "app/**"
+      - ".github/workflows/gitops-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: write
+
+concurrency:
+  group: gitops-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: tech-challenge-2-app
+  HELM_VALUES_FILE: helm/tech-challenge-2/values.yaml
+
+jobs:
+  build-and-update:
+    name: Build, Push, and Update Helm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout gitops branch
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Configure temporary AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Confirm AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+          docker build \
+            --tag "$IMAGE_URI" \
+            ./app
+
+      - name: Test Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+          docker run --detach \
+            --name tech-challenge-2-test \
+            --publish 3000:3000 \
+            "$IMAGE_URI"
+
+          healthy=false
+
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            if curl --fail --silent http://localhost:3000/health; then
+              healthy=true
+              break
+            fi
+
+            sleep 2
+          done
+
+          if [ "$healthy" != "true" ]; then
+            docker logs tech-challenge-2-test
+            docker rm --force tech-challenge-2-test
+            exit 1
+          fi
+
+          docker rm --force tech-challenge-2-test
+
+      - name: Push Docker images to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          LATEST_IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:latest"
+
+          docker push "$IMAGE_URI"
+
+          docker tag \
+            "$IMAGE_URI" \
+            "$LATEST_IMAGE_URI"
+
+          docker push "$LATEST_IMAGE_URI"
+
+      - name: Update Helm image values
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          python3 <<'PYTHON'
+          import os
+          from pathlib import Path
+
+          path = Path(os.environ["HELM_VALUES_FILE"])
+          repository = (
+              f'{os.environ["ECR_REGISTRY"]}/'
+              f'{os.environ["ECR_REPOSITORY"]}'
+          )
+          image_tag = os.environ["IMAGE_TAG"]
+
+          lines = path.read_text().splitlines()
+          updated_lines = []
+          inside_image = False
+
+          for line in lines:
+              if line.startswith("image:"):
+                  inside_image = True
+                  updated_lines.append(line)
+                  continue
+
+              if inside_image and line and not line.startswith((" ", "\t")):
+                  inside_image = False
+
+              if inside_image and line.strip().startswith("repository:"):
+                  updated_lines.append(f"  repository: {repository}")
+              elif inside_image and line.strip().startswith("tag:"):
+                  updated_lines.append(f'  tag: "{image_tag}"')
+              else:
+                  updated_lines.append(line)
+
+          path.write_text("\n".join(updated_lines) + "\n")
+          PYTHON
+
+          grep --after-context=3 "^image:" "$HELM_VALUES_FILE"
+
+      - name: Commit updated Helm values
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add "$HELM_VALUES_FILE"
+
+          if git diff --cached --quiet; then
+            echo "Helm values already contain this image tag."
+          else
+            git commit \
+              --message "chore(gitops): deploy image $IMAGE_TAG [skip ci]"
+
+            git push origin HEAD:gitops
+          fi
