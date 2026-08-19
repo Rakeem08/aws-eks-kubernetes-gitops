@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tech-challenge-2
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Rakeem08/cloud-engineer-tech-challenge-2.git
+    targetRevision: gitops
+    path: helm/tech-challenge-2
+
+    helm:
+      releaseName: tech-challenge-2
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tech-challenge-2
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+
+    syncOptions:
+      - CreateNamespace=true
