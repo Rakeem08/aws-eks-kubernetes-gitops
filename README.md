@@ -14,19 +14,11 @@ A separate `gitops` branch demonstrates the GitOps alternative using GitHub Acti
 
 ## Architecture
 
-```mermaid
-flowchart TD
-    Developer[Developer] --> GitHub[GitHub Repository]
-    GitHub --> Jenkins[Jenkins EC2 Server]
-    Jenkins --> ECR[Amazon ECR]
-    Jenkins --> EKS[Amazon EKS]
-    ECR --> EKS
-    EKS --> ALB[Application Load Balancer]
-    ALB --> User[Application User]
-    Terraform[Terraform] --> Jenkins
-    Terraform --> ECR
-    Terraform --> EKS
-```
+![GitHub Actions and Argo CD GitOps delivery on AWS](docs/images/gitops-architecture.svg)
+
+[Open the full-size GitOps graphic](docs/images/gitops-architecture.svg)
+
+This diagram shows this branch's alternative delivery path. GitHub Actions builds and health-tests the image, publishes a commit-SHA tag to ECR, and commits the Helm image values. Argo CD reads the `gitops` Helm chart and reconciles it to EKS. Automated prune and self-heal are enabled. The Jenkins path remains documented on `main`.
 
 ## Technologies
 
@@ -567,30 +559,9 @@ The `gitops` branch contains an alternative CI/CD process using GitHub Actions a
 
 ### GitOps Architecture
 
-```text
-Developer
-   |
-   v
-GitHub gitops branch
-   |
-   v
-GitHub Actions
-   |
-   +----> Amazon ECR
-   |
-   v
-Helm values updated
-   |
-   v
-Argo CD
-   |
-   v
-Amazon EKS
-   |
-   v
-Application Load Balancer
+See the full-size [GitOps architecture graphic](docs/images/gitops-architecture.svg) above. It reflects `.github/workflows/gitops-ci.yml` and `argocd/application.yaml`.
 
-Destroy the Terraform infrastructure:
+### Destroy the Terraform infrastructure
 
 ```powershell
 terraform -chdir=terraform plan -destroy -out=destroy.tfplan
