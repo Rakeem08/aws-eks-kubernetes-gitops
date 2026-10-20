@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1220" viewBox="0 0 1800 1220" role="img" aria-labelledby="title desc"><title id="title">AWS Kubernetes Application Platform</title><desc id="desc">Jenkins polls GitHub, builds and tests a Docker image, pushes it to ECR and deploys with Helm. The AWS Load Balancer Controller configures an ALB from Ingress. IP targets send traffic to application pods on private worker nodes.</desc><defs>
+<marker id="blue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#2563eb"/></marker>
+<marker id="orange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#d97706"/></marker>
+<marker id="purple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#7c3aed"/></marker>
+<marker id="green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#168563"/></marker>
+<marker id="red" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#dc4558"/></marker>
+<marker id="ink" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#12223b"/></marker>
+<marker id="muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#52647c"/></marker>
+</defs>
+<rect x="0" y="0" width="1800" height="1220" rx="0" fill="#f5f8fc" stroke="#f5f8fc"/>
+<text x="60" y="65" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#2563eb" font-weight="700">RAKEEM BREWINGTON  /  CLOUD ENGINEERING PORTFOLIO</text>
+<text x="60" y="123" font-family="DejaVu Sans, sans-serif" font-size="42" fill="#12223b" font-weight="700">AWS Kubernetes Application Platform</text>
+<text x="60" y="164" font-family="DejaVu Sans, sans-serif" font-size="22" fill="#52647c" font-weight="400">Build and test a container. Deploy with Helm. Operate the workload on Amazon EKS.</text>
+<rect x="55" y="205" width="1690" height="225" rx="24" fill="#edf3fa" stroke="#d3dfed"/>
+<text x="80" y="243" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#3f5675" font-weight="700">DELIVERY PIPELINE</text>
+<path d="M380 335H480" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="400" y="315" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">commit</text>
+<path d="M780 335H880" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="790" y="315" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">poll main</text>
+<path d="M1180 335H1340" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="1200" y="315" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">build / push</text>
+<rect x="80" y="280" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="120" cy="320" r="27" fill="#2563eb" opacity=".10"/><g transform="translate(120,320)" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="0" cy="-7" r="7"/><path d="M-13 17v-4a13 13 0 0 1 26 0v4"/></g>
+<text x="158" y="322" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Developer</text>
+<text x="98" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Node.js source</text>
+<rect x="480" y="280" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="520" cy="320" r="27" fill="#2563eb" opacity=".10"/><g transform="translate(520,320)" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M0-22L22 0 0 22-22 0Z M-9-9L9 9M0 0V13"/><circle cx="-9" cy="-9" r="3"/><circle cx="9" cy="9" r="3"/><circle cx="0" cy="13" r="3"/></g>
+<text x="558" y="322" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">GitHub</text>
+<text x="498" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Source + Dockerfiles + IaC</text>
+<rect x="880" y="280" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="920" cy="320" r="27" fill="#d97706" opacity=".10"/><g transform="translate(920,320)" fill="none" stroke="#d97706" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="-19" y="-21" width="38" height="42" rx="4"/><path d="M-12-10h16M-12 0h16M-12 10h16"/></g>
+<text x="958" y="322" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Jenkins on EC2</text>
+<text x="898" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Docker + AWS CLI + Helm</text>
+<rect x="1340" y="280" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="1380" cy="320" r="27" fill="#7c3aed" opacity=".10"/><g transform="translate(1380,320)" fill="none" stroke="#7c3aed" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M0-21L19-10V11L0 22-19 11V-10Z M-19-10L0 1 19-10M0 1V22"/></g>
+<text x="1418" y="322" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Amazon ECR</text>
+<text x="1358" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Container image repositories</text>
+<rect x="55" y="465" width="1690" height="445" rx="24" fill="#edf3fa" stroke="#d3dfed"/>
+<text x="80" y="503" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#3f5675" font-weight="700">APPLICATION RUNTIME  /  TERRAFORM-MANAGED VPC</text>
+<rect x="900" y="525" width="440" height="345" rx="18" fill="#e8f0fa" stroke="#c7d8ec"/>
+<text x="920" y="554" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#3f5675" font-weight="700">EKS • PRIVATE WORKER NODES</text>
+<path d="M380 700H480" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="393" y="680" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">HTTP :80</text>
+<path d="M780 700H940" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="802" y="680" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">IP targets</text>
+<path d="M1030 390V495H925V525" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#orange)"/>
+<text x="1045" y="458" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#d97706" font-weight="400">Helm upgrade + rollout check</text>
+<path d="M1490 390V560H1365V705H1300" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="1500" y="540" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#7c3aed" font-weight="400">pull image</text>
+<path d="M1340 815H1550V760" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#blue)"/>
+<text x="1370" y="805" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">EKS control-plane logs</text>
+<path d="M940 595H630V645" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="682" y="583" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#7c3aed" font-weight="400">Ingress → ALB</text>
+<rect x="80" y="645" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="120" cy="685" r="27" fill="#2563eb" opacity=".10"/><g transform="translate(120,685)" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="0" cy="-7" r="7"/><path d="M-13 17v-4a13 13 0 0 1 26 0v4"/></g>
+<text x="158" y="687" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Application user</text>
+<text x="98" y="731" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Hello World + /health</text>
+<rect x="480" y="645" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="520" cy="685" r="27" fill="#7c3aed" opacity=".10"/><g transform="translate(520,685)" fill="none" stroke="#7c3aed" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M-20 0H0M0 0V-16H19M0 0V16H19"/><path d="M12-22l7 6-7 6M12 10l7 6-7 6"/></g>
+<text x="558" y="687" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Public ALB</text>
+<text x="498" y="731" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Controller-managed • IP mode</text>
+<rect x="940" y="565" width="360" height="75" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="980" cy="605" r="27" fill="#7c3aed" opacity=".10"/><g transform="translate(980,605)" fill="none" stroke="#7c3aed" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M-18-3a18 18 0 0 1 32-10M14-22v9H5M18 3a18 18 0 0 1-32 10M-14 22v-9h9"/></g>
+<text x="1018" y="607" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">ALB Controller</text>
+<rect x="940" y="650" width="360" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="980" cy="690" r="27" fill="#d97706" opacity=".10"/><g transform="translate(980,690)" fill="none" stroke="#d97706" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M0-21L19-10V11L0 22-19 11V-10Z M-19-10L0 1 19-10M0 1V22"/></g>
+<text x="1018" y="692" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Node.js pods</text>
+<text x="958" y="736" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Deployment + ClusterIP Service</text>
+<text x="960" y="807" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Readiness + liveness probes</text>
+<text x="960" y="836" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#52647c" font-weight="400">Service selects pods; ALB targets pod IPs.</text>
+<rect x="1400" y="650" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="1440" cy="690" r="27" fill="#2563eb" opacity=".10"/><g transform="translate(1440,690)" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="-21" y="-16" width="42" height="29" rx="4"/><path d="M-13 4l7-10 7 7 11-10M0 13v8M-10 21h20"/></g>
+<text x="1478" y="692" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">CloudWatch</text>
+<text x="1418" y="736" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">API / audit / authenticator logs</text>
+<rect x="55" y="945" width="1690" height="175" rx="24" fill="#edf3fa" stroke="#d3dfed"/>
+<text x="80" y="983" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#3f5675" font-weight="700">DESIGN &amp; OPERATIONS</text>
+<text x="80" y="1023" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#2563eb" font-weight="700">01  POD CAPACITY</text>
+<text x="80" y="1057" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#52647c" font-weight="400">Metrics Server feeds the HPA.</text>
+<text x="80" y="1087" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">CPU / memory targets control pod replicas.</text>
+<text x="630" y="1023" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#2563eb" font-weight="700">02  NODE CAPACITY</text>
+<text x="630" y="1057" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#52647c" font-weight="400">Cluster Autoscaler adjusts worker capacity.</text>
+<text x="630" y="1087" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Managed node group runs in private subnets.</text>
+<text x="1180" y="1023" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#2563eb" font-weight="700">03  SEPARATE DELIVERY OPTIONS</text>
+<text x="1180" y="1057" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#52647c" font-weight="400">main: Jenkins + Helm.</text>
+<text x="1180" y="1087" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">gitops: GitHub Actions + Argo CD.</text>
+<text x="65" y="1175" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">BUILT WITH   Terraform • Docker • ECR • EKS • Helm • Jenkins • ALB Controller • Kubernetes</text>
+</svg>
