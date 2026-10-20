@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1220" viewBox="0 0 1800 1220" role="img" aria-labelledby="title desc"><title id="title">AWS Kubernetes GitOps Delivery</title><desc id="desc">GitHub Actions in the gitops branch tests a container, pushes commit-SHA-tagged images to ECR and commits updated Helm image values. Argo CD reads the gitops branch and synchronizes the Helm chart to EKS with prune and self-heal enabled.</desc><defs>
+<marker id="blue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#2563eb"/></marker>
+<marker id="orange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#d97706"/></marker>
+<marker id="purple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#7c3aed"/></marker>
+<marker id="green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#168563"/></marker>
+<marker id="red" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#dc4558"/></marker>
+<marker id="ink" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#12223b"/></marker>
+<marker id="muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#52647c"/></marker>
+</defs>
+<rect x="0" y="0" width="1800" height="1220" rx="0" fill="#f5f8fc" stroke="#f5f8fc"/>
+<text x="60" y="65" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#2563eb" font-weight="700">RAKEEM BREWINGTON  /  CLOUD ENGINEERING PORTFOLIO</text>
+<text x="60" y="123" font-family="DejaVu Sans, sans-serif" font-size="42" fill="#12223b" font-weight="700">AWS Kubernetes GitOps Delivery</text>
+<text x="60" y="164" font-family="DejaVu Sans, sans-serif" font-size="22" fill="#52647c" font-weight="400">Test and publish images. Commit the desired version. Let Argo CD reconcile EKS.</text>
+<rect x="55" y="205" width="1690" height="245" rx="24" fill="#edf3fa" stroke="#d3dfed"/>
+<text x="80" y="243" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#3f5675" font-weight="700">CONTINUOUS INTEGRATION  /  gitops BRANCH</text>
+<path d="M380 335H480" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="393" y="315" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">push app</text>
+<path d="M780 335H880" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="798" y="315" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">trigger</text>
+<path d="M1180 335H1340" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="1195" y="315" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">push SHA tag</text>
+<rect x="80" y="280" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="120" cy="320" r="27" fill="#2563eb" opacity=".10"/><g transform="translate(120,320)" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="0" cy="-7" r="7"/><path d="M-13 17v-4a13 13 0 0 1 26 0v4"/></g>
+<text x="158" y="322" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Developer</text>
+<text x="98" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Application source change</text>
+<rect x="480" y="280" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="520" cy="320" r="27" fill="#2563eb" opacity=".10"/><g transform="translate(520,320)" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M0-22L22 0 0 22-22 0Z M-9-9L9 9M0 0V13"/><circle cx="-9" cy="-9" r="3"/><circle cx="9" cy="9" r="3"/><circle cx="0" cy="13" r="3"/></g>
+<text x="558" y="322" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">GitHub</text>
+<text x="498" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">gitops branch • app/</text>
+<rect x="880" y="280" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="920" cy="320" r="27" fill="#d97706" opacity=".10"/><g transform="translate(920,320)" fill="none" stroke="#d97706" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="0" cy="0" r="20"/><path d="M-10 0l7 8 15-18"/></g>
+<text x="958" y="322" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">GitHub Actions</text>
+<text x="898" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Build + /health test • AWS OIDC</text>
+<rect x="1340" y="280" width="300" height="110" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="1380" cy="320" r="27" fill="#7c3aed" opacity=".10"/><g transform="translate(1380,320)" fill="none" stroke="#7c3aed" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M0-21L19-10V11L0 22-19 11V-10Z M-19-10L0 1 19-10M0 1V22"/></g>
+<text x="1418" y="322" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Amazon ECR</text>
+<text x="1358" y="366" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Commit SHA + latest image tags</text>
+<rect x="55" y="485" width="1690" height="420" rx="24" fill="#edf3fa" stroke="#d3dfed"/>
+<text x="80" y="523" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#3f5675" font-weight="700">CONTINUOUS DELIVERY  /  DECLARATIVE CONFIGURATION</text>
+<path d="M1030 390V465H230V620" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#orange)"/>
+<text x="350" y="456" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#d97706" font-weight="400">commit repository + image tag to Helm values</text>
+<path d="M380 675H480" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="395" y="652" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#7c3aed" font-weight="400">read Git</text>
+<path d="M780 675H880" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="810" y="652" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#7c3aed" font-weight="400">sync</text>
+<path d="M1490 390H1710V835H1030V730" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="1250" y="820" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#7c3aed" font-weight="400">EKS pulls image from ECR</text>
+<path d="M1340 675H1180" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#blue)"/>
+<text x="1195" y="652" font-family="DejaVu Sans, sans-serif" font-size="15" fill="#2563eb" font-weight="400">HTTP to pods</text>
+<rect x="80" y="620" width="300" height="140" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="120" cy="660" r="27" fill="#2563eb" opacity=".10"/><g transform="translate(120,660)" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M-15-20H8l8 8v32h-31ZM8-20v9h8M-8-3H8M-8 5H8M-8 13H2"/></g>
+<text x="158" y="662" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">GitHub Helm values</text>
+<text x="98" y="706" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">gitops branch • image.tag</text>
+<text x="98" y="731" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Versioned desired configuration</text>
+<rect x="480" y="620" width="300" height="140" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="520" cy="660" r="27" fill="#7c3aed" opacity=".10"/><g transform="translate(520,660)" fill="none" stroke="#7c3aed" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M-18-3a18 18 0 0 1 32-10M14-22v9H5M18 3a18 18 0 0 1-32 10M-14 22v-9h9"/></g>
+<text x="558" y="662" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Argo CD</text>
+<text x="498" y="706" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Tracks gitops Helm chart</text>
+<text x="498" y="731" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Automated sync + self-heal</text>
+<rect x="880" y="620" width="300" height="140" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="920" cy="660" r="27" fill="#d97706" opacity=".10"/><g transform="translate(920,660)" fill="none" stroke="#d97706" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M0-21L19-10V11L0 22-19 11V-10Z M-19-10L0 1 19-10M0 1V22"/></g>
+<text x="958" y="662" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Amazon EKS</text>
+<text x="898" y="706" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Rolling application deployment</text>
+<text x="898" y="731" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Pods use the committed image tag</text>
+<rect x="1340" y="620" width="300" height="140" rx="18" fill="#ffffff" stroke="#dce5ef"/>
+<circle cx="1380" cy="660" r="27" fill="#7c3aed" opacity=".10"/><g transform="translate(1380,660)" fill="none" stroke="#7c3aed" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M-20 0H0M0 0V-16H19M0 0V16H19"/><path d="M12-22l7 6-7 6M12 10l7 6-7 6"/></g>
+<text x="1418" y="662" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#12223b" font-weight="700">Public ALB</text>
+<text x="1358" y="706" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Application entry point</text>
+<text x="1358" y="731" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Ingress managed by controller</text>
+<text x="100" y="848" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Dotted: configuration, deployment or image flow. Request traffic enters through the public ALB and reaches pods.</text>
+<rect x="55" y="945" width="1690" height="175" rx="24" fill="#edf3fa" stroke="#d3dfed"/>
+<text x="80" y="983" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#3f5675" font-weight="700">DESIGN &amp; OPERATIONS</text>
+<text x="80" y="1023" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#2563eb" font-weight="700">01  TRACEABLE ARTIFACTS</text>
+<text x="80" y="1057" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#52647c" font-weight="400">The image is tagged with the Git commit SHA.</text>
+<text x="80" y="1087" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">The workflow commits Helm image values.</text>
+<text x="630" y="1023" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#2563eb" font-weight="700">02  DECLARATIVE DELIVERY</text>
+<text x="630" y="1057" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#52647c" font-weight="400">Argo CD reads Git and reconciles EKS.</text>
+<text x="630" y="1087" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">prune + selfHeal are enabled in Application.</text>
+<text x="1180" y="1023" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#2563eb" font-weight="700">03  ALTERNATIVE PIPELINE</text>
+<text x="1180" y="1057" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#52647c" font-weight="400">This flow lives in the gitops branch.</text>
+<text x="1180" y="1087" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">Jenkins delivery remains on main.</text>
+<text x="65" y="1175" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#52647c" font-weight="400">BUILT WITH   GitHub Actions • Docker • ECR • Helm • Argo CD • EKS • AWS OIDC</text>
+</svg>
