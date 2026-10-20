@@ -14,19 +14,11 @@ A separate `gitops` branch demonstrates the GitOps alternative using GitHub Acti
 
 ## Architecture
 
-```mermaid
-flowchart TD
-    Developer[Developer] --> GitHub[GitHub Repository]
-    GitHub --> Jenkins[Jenkins EC2 Server]
-    Jenkins --> ECR[Amazon ECR]
-    Jenkins --> EKS[Amazon EKS]
-    ECR --> EKS
-    EKS --> ALB[Application Load Balancer]
-    ALB --> User[Application User]
-    Terraform[Terraform] --> Jenkins
-    Terraform --> ECR
-    Terraform --> EKS
-```
+![AWS EKS delivery, application runtime and operations](docs/images/eks-architecture.svg)
+
+[Open the full-size architecture graphic](docs/images/eks-architecture.svg)
+
+This diagram shows the `main` branch delivery path: Jenkins builds and health-tests the image, pushes it to ECR, and deploys a versioned tag with Helm. Ingress is reconciled by the AWS Load Balancer Controller; the ALB uses IP targets to reach application pods. The ClusterIP Service selects the pods but is not a separate ALB traffic hop in this configuration. Dotted arrows show deployment, image, or control-plane flow.
 
 ## Technologies
 
@@ -567,30 +559,13 @@ The `gitops` branch contains an alternative CI/CD process using GitHub Actions a
 
 ### GitOps Architecture
 
-```text
-Developer
-   |
-   v
-GitHub gitops branch
-   |
-   v
-GitHub Actions
-   |
-   +----> Amazon ECR
-   |
-   v
-Helm values updated
-   |
-   v
-Argo CD
-   |
-   v
-Amazon EKS
-   |
-   v
-Application Load Balancer
+![GitHub Actions build and image publication, versioned Helm values, and Argo CD reconciliation to EKS](docs/images/gitops-architecture.svg)
 
-Destroy the Terraform infrastructure:
+[Open the full-size GitOps graphic](docs/images/gitops-architecture.svg)
+
+The `gitops` branch contains the alternative delivery implementation. GitHub Actions uses AWS OIDC, tests the container, publishes an image tagged with the commit SHA, and commits the updated Helm image values. Argo CD reads those values from Git and synchronizes the Helm chart to EKS. Automated prune and self-heal are configured. This diagram describes repository configuration rather than asserting a currently running deployment.
+
+### Destroy the Terraform infrastructure
 
 ```powershell
 terraform -chdir=terraform plan -destroy -out=destroy.tfplan
