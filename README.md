@@ -1,4 +1,4 @@
-# Tech Challenge 2
+# AWS EKS — Kubernetes Deployment and GitOps
 
 Application Deployment with Docker, Terraform, Amazon EKS, Helm, Jenkins, GitHub Actions, and Argo CD.
 
