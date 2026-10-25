@@ -2,6 +2,27 @@
 
 Application Deployment with Docker, Terraform, Amazon EKS, Helm, Jenkins, GitHub Actions, and Argo CD.
 
+## Project at a glance
+
+**Business scenario:** A team needs consistent Kubernetes deployments, a way to accommodate changing demand, and traceable changes to application configuration.
+
+**What I built:** Provisioned an Amazon EKS environment with Terraform, containerized a Node.js application, and deployed it using Helm. Practiced both Jenkins-based delivery and a separate GitHub Actions/Argo CD GitOps workflow.
+
+**Verified outcomes**
+- Tested Kubernetes autoscaling with **100 concurrent users for five minutes**.
+- Investigated and corrected kubeconfig, security-group, ECR authentication, and pod-readiness issues.
+- Used version-controlled Kubernetes/Helm configuration to demonstrate repeatable deployments.
+
+**Key decisions:** Managed EKS separates Kubernetes control-plane operations from application delivery; Helm standardizes releases; GitOps improves traceability between Git configuration and cluster state.
+
+**Production improvements to prioritize:** Explicit SLOs, dashboard-backed alerting, resilient multi-AZ capacity, least-privilege deployment access, and a documented rollback procedure.
+
+**Stack:** AWS EKS · ECR · Terraform · Kubernetes · Docker · Helm · Jenkins · GitHub Actions · Argo CD
+
+**Explore:** [Architecture](#architecture) · [Technology choices](#technologies) · [Source code](https://github.com/Rakeem08/aws-eks-kubernetes-gitops)
+
+> **Portfolio environment:** The application URL below is a historical lab endpoint; it may no longer be reachable.
+
 ## Live Application
 
 [Open the deployed Hello World application](http://k8s-techchal-techchal-ce433c8d4f-1761637325.us-east-1.elb.amazonaws.com)
