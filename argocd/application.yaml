@@ -8,7 +8,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/Rakeem08/cloud-engineer-tech-challenge-2.git
+    repoURL: https://github.com/Rakeem08/aws-eks-kubernetes-gitops.git
     targetRevision: gitops
     path: helm/tech-challenge-2
 

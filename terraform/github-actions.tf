@@ -36,11 +36,11 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
     }
 
     condition {
-      test     = "StringLike"
+      test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
 
       values = [
-        "repo:Rakeem08@*/cloud-engineer-tech-challenge-2@*:ref:refs/heads/gitops"
+        "repo:Rakeem08@300660116/aws-eks-kubernetes-gitops@1338752891:ref:refs/heads/gitops"
       ]
     }
   }
