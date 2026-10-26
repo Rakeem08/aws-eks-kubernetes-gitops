@@ -12,7 +12,7 @@ Application Deployment with Docker, Terraform, Amazon EKS, Helm, Jenkins, GitHub
 
 - Jenkins builds the image, checks `/health`, publishes build-number and `latest` tags to ECR, and deploys the build-number tag with Helm.
 - The Helm chart defines health probes, container security settings, and CPU/memory-based pod autoscaling.
-- The `gitops` branch contains an image build/push workflow and an Argo CD Application manifest. Repository references in that branch need updating before reuse; see [GitOps alternative](#gitops-alternative-github-actions-and-argo-cd).
+- The `gitops` branch contains an image build/push workflow and an Argo CD Application manifest. Its repository references are updated; environment setup and end-to-end verification remain necessary. See [GitOps alternative](#gitops-alternative-github-actions-and-argo-cd).
 
 These statements describe committed configuration. Current deployment health and load-test outcomes are not verified by the committed files.
 
@@ -39,7 +39,7 @@ This project demonstrates how to containerize a Node.js web application, create 
 | Path | Implementation | Deployment behavior |
 |---|---|---|
 | Main workflow: Jenkins | [`Jenkinsfile`](Jenkinsfile) on `main` | Jenkins pushes to ECR and runs Helm directly against EKS. |
-| Alternative: GitHub Actions + Argo CD | [`gitops` branch](https://github.com/Rakeem08/aws-eks-kubernetes-gitops/tree/gitops) | Actions publishes the image and commits Helm image values; Argo CD is configured to reconcile that branch into EKS. Setup corrections are listed below. |
+| Alternative: GitHub Actions + Argo CD | [`gitops` branch](https://github.com/Rakeem08/aws-eks-kubernetes-gitops/tree/gitops) | Actions publishes the image and commits Helm image values; Argo CD is configured to reconcile that branch into EKS. Setup requirements are listed below. |
 
 The instructions below use `main` unless explicitly marked as GitOps. Use one deployment owner for the application: Jenkins and Argo CD should not both manage the same release.
 
@@ -558,15 +558,19 @@ The alternative implementation is on the [`gitops` branch](https://github.com/Ra
 4. It updates `image.repository` and `image.tag` in `helm/tech-challenge-2/values.yaml` and pushes a commit back to `gitops`.
 5. An installed Argo CD instance with the Application applied is configured to reconcile the chart into EKS. Actions does not run Helm against the cluster.
 
-### Current Setup Gaps
+### Current Setup Requirements
 
-The files exist, but the current branch still contains references from before the repository rename:
+The `gitops` branch now uses the current public repository URL in its Argo CD Application. Its IAM trust matches the branch's immutable GitHub OIDC subject, including numeric owner and repository IDs:
 
-- `argocd/application.yaml` uses the old clone URL. Set `spec.source.repoURL` to `https://github.com/Rakeem08/aws-eks-kubernetes-gitops.git` before applying it.
-- The OIDC trust subject in `terraform/github-actions.tf` uses an outdated repository pattern with `@*` segments. For this repository's `gitops` branch, it must match `repo:Rakeem08/aws-eks-kubernetes-gitops:ref:refs/heads/gitops`.
-- Configure `AWS_ROLE_ARN` with the role ARN, allow the workflow to write Helm values back to the branch, and install Argo CD separately before applying the Application.
+```text
+repo:Rakeem08@300660116/aws-eks-kubernetes-gitops@1338752891:ref:refs/heads/gitops
+```
 
-These corrections and environment setup are prerequisites. The presence of workflow and Application files does not verify a successful CI run, an installed Argo CD instance, or a healthy synchronized deployment.
+The `@` ID segments are part of [GitHub's immutable subject format](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims).
+
+Review and apply the updated Terraform trust before expecting CI authentication. Configure `AWS_ROLE_ARN`, allow the workflow to write Helm values back to the branch, and install Argo CD separately before applying the Application. Follow the [branch setup guide](https://github.com/Rakeem08/aws-eks-kubernetes-gitops/blob/gitops/README.md).
+
+Updated source files do not verify a successful CI run, an installed Argo CD instance, or a healthy synchronized deployment.
 
 ### GitOps Architecture
 
@@ -615,5 +619,6 @@ Checked items indicate source/configuration present, not a currently running AWS
 - [x] Separate `gitops` branch
 - [x] GitHub Actions build, health-check, ECR-push, and Helm-values update workflow on `gitops`
 - [x] Argo CD Application manifest on `gitops`
-- [ ] Correct the GitOps repository URL and OIDC trust subject for the renamed repository
-- [ ] Verify GitOps end to end after those corrections and environment setup
+- [x] Current GitOps repository URL and exact owner/repository IDs in OIDC trust
+- [ ] Apply the trust update and configure the repository/environment
+- [ ] Verify GitOps end to end after environment setup
