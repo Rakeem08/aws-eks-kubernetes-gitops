@@ -1,0 +1,4 @@
+account_id                   = "123456789012"
+kubernetes_version           = "1.36"
+endpoint_public_access_cidrs = ["203.0.113.10/32"]
+ecr_pull_account_ids         = ["210987654321"]
