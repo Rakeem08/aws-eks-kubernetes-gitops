@@ -5,7 +5,9 @@ npm-debug.log*
 # Environment files and credentials
 .env
 *.pem
-terraform/*.tfvars
+
+# Terraform variable files (real values stay local; commit *.tfvars.example instead)
+*.tfvars
 
 # Terraform temporary files and state
 **/.terraform/*
@@ -13,11 +15,11 @@ terraform/*.tfvars
 *.tfstate.*
 crash.log
 
+# Terraform plan files
+tfplan
+*.tfplan
+
 # Editor and operating-system files
 .vscode/
 .DS_Store
 Thumbs.db
-
-# Terraform plan files
-tfplan
-*.tfplan
