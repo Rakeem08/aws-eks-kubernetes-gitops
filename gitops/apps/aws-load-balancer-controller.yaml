@@ -12,6 +12,9 @@ spec:
     helm:
       valuesObject:
         clusterName: rakeem-dev-eks
+        region: us-east-1
+        vpcTags:
+          Name: rakeem-dev-vpc
         serviceAccount:
           create: true
           name: aws-load-balancer-controller
