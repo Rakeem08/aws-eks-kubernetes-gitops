@@ -18,3 +18,8 @@ output "configure_kubectl" {
   description = "Run this to connect kubectl to the cluster"
   value       = "aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${var.aws_region} --profile dev-admin"
 }
+
+output "github_actions_role_arn" {
+  description = "Role ARN for GitHub Actions (set as AWS_ROLE_ARN repo variable)"
+  value       = aws_iam_role.github_actions_ecr.arn
+}

@@ -70,3 +70,70 @@ module "aws_lb_controller_pod_identity" {
     }
   }
 }
+
+# 5. GitHub Actions -> AWS with OIDC (no stored keys)
+resource "aws_iam_openid_connect_provider" "github" {
+  url            = "https://token.actions.githubusercontent.com"
+  client_id_list = ["sts.amazonaws.com"]
+}
+
+data "aws_iam_policy_document" "github_trust" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_openid_connect_provider.github.arn]
+    }
+
+    # Token must be meant for AWS
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    # Q2: only THIS repo, only THESE branches
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values = [
+        "repo:Rakeem08/aws-eks-kubernetes-gitops:ref:refs/heads/phase-1-foundations",
+        "repo:Rakeem08/aws-eks-kubernetes-gitops:ref:refs/heads/main",
+      ]
+    }
+  }
+}
+
+resource "aws_iam_role" "github_actions_ecr" {
+  name               = "${local.name}-github-actions-ecr"
+  assume_role_policy = data.aws_iam_policy_document.github_trust.json
+  max_session_duration = 3600
+}
+
+data "aws_iam_policy_document" "ecr_push" {
+  # ECR login can't be scoped to a repo (AWS limitation)
+  statement {
+    actions   = ["ecr:GetAuthorizationToken"]
+    resources = ["*"]
+  }
+
+  # Q3: push to ONE repo only
+  statement {
+    actions = [
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:PutImage",
+      "ecr:BatchGetImage",
+    ]
+    resources = [module.ecr.repository_arn]
+  }
+}
+
+resource "aws_iam_role_policy" "github_actions_ecr" {
+  name   = "ecr-push-rakeem-app"
+  role   = aws_iam_role.github_actions_ecr.id
+  policy = data.aws_iam_policy_document.ecr_push.json
+}
