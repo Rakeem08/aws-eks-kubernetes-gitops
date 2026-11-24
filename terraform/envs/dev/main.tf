@@ -52,3 +52,21 @@ module "eks" {
   node_desired_size   = 2
   node_max_size       = 4
 }
+
+# 4. IAM role for the AWS Load Balancer Controller (Pod Identity - no keys)
+module "aws_lb_controller_pod_identity" {
+  source  = "terraform-aws-modules/eks-pod-identity/aws"
+  version = "~> 2.0"
+
+  name = "${local.cluster_name}-aws-lbc"
+
+  attach_aws_lb_controller_policy = true
+
+  associations = {
+    this = {
+      cluster_name    = module.eks.cluster_name
+      namespace       = "kube-system"
+      service_account = "aws-load-balancer-controller"
+    }
+  }
+}
