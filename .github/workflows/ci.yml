@@ -1,0 +1,67 @@
+name: ci
+
+on:
+  push:
+    branches: [phase-1-foundations, main]
+    paths:
+      - "app/**"
+      - ".github/workflows/ci.yml"
+  workflow_dispatch: {}
+
+permissions:
+  id-token: write   # required for OIDC (GitHub -> AWS, no keys)
+  contents: write   # required to commit the new image tag
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  build-scan-push-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set image tag (short commit SHA)
+        run: echo "TAG=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      - name: Build image
+        run: |
+          docker build --provenance=false \
+            -t "${{ steps.ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${TAG}" \
+            ./app
+
+      - name: Scan image with Trivy (fail on CRITICAL)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ steps.ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ env.TAG }}
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+
+      - name: Push image
+        run: docker push "${{ steps.ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${TAG}"
+
+      - name: Update dev image tag (GitOps)
+        run: |
+          sed -i "s/^  tag: .*/  tag: \"${TAG}\"/" helm/tech-challenge-2/values-dev.yaml
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add helm/tech-challenge-2/values-dev.yaml
+          git commit -m "chore(release): deploy ${TAG} to dev"
+          git push
