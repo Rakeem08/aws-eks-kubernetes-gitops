@@ -93,21 +93,21 @@ data "aws_iam_policy_document" "github_trust" {
       values   = ["sts.amazonaws.com"]
     }
 
-    # Q2: only THIS repo, only THESE branches
+    # Only THIS repo (pinned by immutable owner/repo IDs), only THESE branches
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
       values = [
-        "repo:Rakeem08/aws-eks-kubernetes-gitops:ref:refs/heads/phase-1-foundations",
-        "repo:Rakeem08/aws-eks-kubernetes-gitops:ref:refs/heads/main",
+        "repo:Rakeem08@300660116/aws-eks-kubernetes-gitops@1338752891:ref:refs/heads/phase-1-foundations",
+        "repo:Rakeem08@300660116/aws-eks-kubernetes-gitops@1338752891:ref:refs/heads/main",
       ]
     }
   }
 }
 
 resource "aws_iam_role" "github_actions_ecr" {
-  name               = "${local.name}-github-actions-ecr"
-  assume_role_policy = data.aws_iam_policy_document.github_trust.json
+  name                 = "${local.name}-github-actions-ecr"
+  assume_role_policy   = data.aws_iam_policy_document.github_trust.json
   max_session_duration = 3600
 }
 
@@ -118,7 +118,7 @@ data "aws_iam_policy_document" "ecr_push" {
     resources = ["*"]
   }
 
-  # Q3: push to ONE repo only
+  # Push to ONE repo only (least privilege)
   statement {
     actions = [
       "ecr:BatchCheckLayerAvailability",
