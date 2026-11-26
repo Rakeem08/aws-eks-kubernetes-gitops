@@ -1,0 +1,81 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 93.11.0
+    helm:
+      valuesObject:
+        # Keep it small for a 2-node dev cluster
+        prometheus:
+          prometheusSpec:
+            retention: 1d
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 1Gi
+        alertmanager:
+          alertmanagerSpec:
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+
+        # SLI + alerts for tech-challenge-2 (availability-based)
+        additionalPrometheusRulesMap:
+          tech-challenge-2-slo:
+            groups:
+              - name: tech-challenge-2.slo
+                rules:
+                  # SLI: fraction of desired pods that are available (1.0 = 100%)
+                  - record: slo:tech_challenge_2:availability:ratio
+                    expr: |
+                      kube_deployment_status_replicas_available{namespace="tech-challenge-2", deployment="tech-challenge-2"}
+                      /
+                      kube_deployment_spec_replicas{namespace="tech-challenge-2", deployment="tech-challenge-2"}
+
+                  # Page: app is completely down
+                  - alert: TechChallenge2Down
+                    expr: kube_deployment_status_replicas_available{namespace="tech-challenge-2", deployment="tech-challenge-2"} < 1
+                    for: 2m
+                    labels:
+                      severity: critical
+                    annotations:
+                      summary: "tech-challenge-2 has no available pods"
+                      description: "Users are getting errors. Check pods, events, and recent deploys."
+
+                  # Warn: lost high availability (fewer than 2 pods)
+                  - alert: TechChallenge2BelowHA
+                    expr: kube_deployment_status_replicas_available{namespace="tech-challenge-2", deployment="tech-challenge-2"} < 2
+                    for: 5m
+                    labels:
+                      severity: warning
+                    annotations:
+                      summary: "tech-challenge-2 is running with fewer than 2 pods"
+                      description: "One AZ or node failure would cause downtime."
+
+                  # Warn: pods are crash-looping
+                  - alert: TechChallenge2Restarting
+                    expr: increase(kube_pod_container_status_restarts_total{namespace="tech-challenge-2"}[15m]) > 3
+                    labels:
+                      severity: warning
+                    annotations:
+                      summary: "tech-challenge-2 pods are restarting frequently"
+                      description: "Check logs for crashes."
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
